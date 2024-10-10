@@ -10,7 +10,7 @@ class ListArray : public List<T> {
     private:
         T*arr;
 	int max;
-	int n;
+	int n=0;
 	static const int MINSIZE = 2;
 	void resize(int new_size){
                 T *nuevo_array = new T[new_size];
@@ -25,14 +25,14 @@ class ListArray : public List<T> {
         ListArray(){
 	arr = new T[MINSIZE];
 	max = MINSIZE;
-
+	n = 0;
 	}
     	~ListArray(){
 		delete[] arr;
 	}
 	T& operator[](int pos){
 	try{
-		if(pos < 0 || pos > size()-1){
+		if(pos < 0 || pos > n-1){
 			throw out_of_range("Posición no valida");
 		}
 	}
@@ -41,6 +41,20 @@ class ListArray : public List<T> {
    	}
 	return arr[pos];
 	}
-	friend std::ostream&operator<<(std::ostream &out, const ListArray<T> &list){}
-	
+	friend std::ostream&operator<<(std::ostream &out, const ListArray<T> &list){
+		for(int i=0; i<list.n; i++){
+			out << list.arr[i] << ", ";
+		}
+		return out;
+	}
+	void append(T &valor){
+		if(n==max){
+			resize(max*2);
+		}
+		arr[n]= valor;
+		n++;
+	}
+	int size(){
+		return n;
+	}
 };
