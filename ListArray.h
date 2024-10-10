@@ -47,14 +47,63 @@ class ListArray : public List<T> {
 		}
 		return out;
 	}
-	void append(T &valor){
+	void insert(int pos, T e){
 		if(n==max){
 			resize(max*2);
 		}
-		arr[n]= valor;
+		for(int i = n; i > pos; i--){
+			arr[i] = arr[i-1];
+		}
+		arr[pos]= e;
 		n++;
 	}
-	int size(){
+	int size() const{
 		return n;
 	}
+	T remove(int pos){
+		int aux = arr[pos];
+		for(int i = 0; i < n-pos; i++){
+			arr[pos]=arr[pos+1];
+		}
+		n--;
+		return aux;
+	}
+	bool empty(){
+		if(size()==0){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	T get(int pos){
+		return arr[pos];
+	}
+	int search(T var){
+		for(int i = 0; i < n; i++){
+			if(arr[i] == var){
+				return i;
+			}
+		}
+		return -1;
+	}
+	void prepend(T e){
+		if(n==max){
+			resize(max*2);
+		}
+		for(int i = size(); i > 0 ; i--){
+			arr[i] = arr[i-1];
+		}
+		arr[0] = e;
+		n++;
+	}
+
+	void append(T e){
+		if(n==max){
+			resize(max*2);
+		}
+		arr[n] = e;
+		n++;
+	}
+	
 };
